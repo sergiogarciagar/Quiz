@@ -74,6 +74,13 @@ exports.create = function(req, res) {
   ); 
 };
 
+// DELETE /quiz/:id
+exports.destroy = function(req, res) {
+	req.quiz.destroy().then( function() {
+		res.redirect('/quizes');
+	}) .catch(function(error){next(error)});
+};
+
 // GET /quizes/:id
 exports.show = function(req, res) {
 	models.Quiz.find(req.params.quizId).then(function(quiz){
