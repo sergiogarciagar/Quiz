@@ -17,9 +17,22 @@ exports.load = function(req, res, next, quizId) {
 
 //GET /quizes
 exports.index = function(req, res) {
+	busqueda = req.query.search;
+	if(busqueda === undefined){
 	models.Quiz.findAll().then(function(quizes){
 	res.render('quizes/index.ejs', { quizes: quizes, errors: []});
-	})
+	}).catch(function(error){next(error);});
+} else {
+	bucar = "%" + busqueda.replace(/ +/g, "%") + "%";
+	models.Quiz
+	.findAll(
+		{where: ["pregunta like ?",  "%" + busqueda.replace(/ +/g, "%") + "%" ]//,
+	     //order: [{'alfabeticAt', 'DESC'}]
+	 })
+    .then(function(quizes){
+    	res.render('quizes/index.ejs', {quizes: quizes, errors:[]});
+    }).catch(function(error){next(error);})
+}
 };
 
 // GET quizes/:id/edit

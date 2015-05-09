@@ -1,3 +1,10 @@
+Busqueda de preguntas : <p>
+<form method="get" action="/quizes" >
+<input type="text" id ="search" name="search" value="<%= busqueda  || "Introduce busqueda"%>"/>
+<button type="submit"> Buscar </button>
+<br><br>
+</form>
+
 <table>
 <% var i; for(i=0; i < quizes.length; i++) { %>
 	<tr>
@@ -16,5 +23,7 @@
 	<% } %>
  </table><p/>
  <%if(session.user){%>
+ </table><p><br> <br>
+ <%if(session.user) {%>
  <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
  <%}%>
