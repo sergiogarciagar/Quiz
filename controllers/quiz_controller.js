@@ -17,22 +17,11 @@ exports.load = function(req, res, next, quizId) {
 
 //GET /quizes
 exports.index = function(req, res) {
-	if(req.query.search === undefined){
 	models.Quiz.findAll().then(function(quizes){
 	res.render('quizes/index.ejs', { quizes: quizes, errors: []});
-	}).catch(function(error){
-		next(error);});
- } else {
- 	busqueda = req.query.busqueda || '';
-	busquedas_like = "%" + busqueda.replace(/ + /g, "%") + "%";
-	models.Quiz.findAll({
-		where: ["preguntas like ?", busquedas_like]})
-		//oder: [{'quizes.nombre', 'ASC'}]
-		.then(function(quizes){
-		res.render('quizes/index.ejs', {quizes: quizes, errors:[]});
-	}).catch(function(error){next(error);})
-	}
+	})
 };
+
 // GET quizes/:id/edit
 exports.edit = function(req, res) {
 	var quiz = req.quiz; //autoload de instancia de quiz
