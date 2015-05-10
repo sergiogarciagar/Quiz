@@ -26,8 +26,8 @@ exports.index = function(req, res) {
 	bucar = "%" + busqueda.replace(/ +/g, "%") + "%";
 	models.Quiz
 	.findAll(
-		{where: ["pregunta like ?",  "%" + busqueda.replace(/ +/g, "%") + "%" ]//,
-	     //order: [{'alfabeticAt', 'DESC'}]
+		{where: ["pregunta like ?",  "%" + busqueda.replace(/ +/g, "%") + "%" ],
+	     order: 'pregunta ASC' 
 	 })
     .then(function(quizes){
     	res.render('quizes/index.ejs', {quizes: quizes, errors:[]});
