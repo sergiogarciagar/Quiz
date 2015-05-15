@@ -1,4 +1,5 @@
 var express = require('express');
+var multer = require('multer');
 var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller');
@@ -37,9 +38,9 @@ router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 //Rutas de /quizes con autorización
 router.get('/quizes/new', sessionController.loginRequired, quizController.new);
-router.post('/quizes/create',sessionController.loginRequired, quizController.create);
+router.post('/quizes/create',sessionController.loginRequired, multer({dest: './public/media/'}), quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit',sessionController.loginRequired, userController.ownershipRequired, quizController.edit);
-router.put('/quizes/:quizId(\\d+)',sessionController.loginRequired, userController.ownershipRequired, quizController.update);
+router.put('/quizes/:quizId(\\d+)',sessionController.loginRequired, userController.ownershipRequired, multer({dest: './public/media/'}), quizController.update);
 router.delete('/quizes/:quizId(\\d+)',sessionController.loginRequired, userController.ownershipRequired, quizController.destroy);
 // Definición de rutas de comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
