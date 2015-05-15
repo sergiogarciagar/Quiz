@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
 				type: DataTypes.STRING,
 				unique: true,
 				validate: {
-					noEmpty: { msg: "-> Falta username"},
+					notEmpty: { msg: "-> Falta username"},
 					// -> devuelve mensaje de error si username ya existe
 					isUnique: function(value, next) {
 						var self = this;
@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
 			},
 			password: {
 				type: DataTypes.STRING,
-				validate: {noEmpty: {msg: "->Falta password"}},
+				validate: {notEmpty: {msg: "->Falta password"}},
 				set : function(password) {
 					var encripted = crypto
 					                .createHmac('sha1', key)
@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
 					                .digest('hex');
 			    //Evita passwords vacíos
 			    if(password === '') {encripted = '';}
-			    this.setDataValue('password', encripted)
+			    this.setDataValue('password', encripted);
 				}
 			},
 			isAdmin: {
@@ -48,6 +48,9 @@ module.exports = function(sequelize, DataTypes) {
 			instanceMethods: {
 				verifyPassword: function(password) {
 					var encripted = crypto
+					                .createHmac('sha1', key)
+					                .update(password)
+					                .digest('hex');				                
 
 					return encripted == this.password;
 				}

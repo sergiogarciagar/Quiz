@@ -87,7 +87,7 @@ exports.create = function(req, res) {
 	     .then(function(){res.redirect('/quizes')})
 	} // Redirección HTTP (URL relativo) lista de preguntas
    }
-  ); 
+  ).catch(function(error){next(error)}); 
 };
 
 // DELETE /quiz/:id

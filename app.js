@@ -27,14 +27,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('Quiz 2015'));
-app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session());
 
 //Helpers dinamicos:
 app.use(function(req, res, next) {
+
+    // si no existe lo inicializa
+    if (!req.session.redir) {
+        req.session.redir = '/';
+    }
+
     //guardar path en sesion.redir para despues de login
-    if(!req.path.match(/\/login|\/logout/)) {
+    if(!req.path.match(/\/login|\/logout|\/user/)) {
         req.session.redir = req.path;
     }
     //Hacer visible req.session en las vistas
