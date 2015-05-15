@@ -30,7 +30,19 @@ exports.load = function(req, res, next, quizId) {
 };
 
 //GET /quizes
+// GET /users/:userId/quizes
 exports.index = function(req, res) {
+	var options = {};
+    if(req.user) { // req.user es creado por autoload de usuario
+    	           // si la ruta lleva el parámetro .quizId
+       options.where = {Userid: req.user.id}
+    }
+
+    models.Quiz.findAll(options).then(
+    	function(quizes) {
+    		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
+    	}
+      ).catch(function(error){next})
 	busqueda = req.query.search;
 	if(busqueda === undefined){
 	models.Quiz.findAll().then(function(quizes){

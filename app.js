@@ -43,11 +43,23 @@ app.use(function(req, res, next) {
     if(!req.path.match(/\/login|\/logout|\/user/)) {
         req.session.redir = req.path;
     }
+
     //Hacer visible req.session en las vistas
     res.locals.session = req.session;
     next();
-});
 
+});
+if(session !== null){
+app.use(function(req, res, next){
+  // auto-logout para desconectar la sesión
+   var inicio = Date();
+   var tiempo = Date();
+   if( (inicio - tiempo) > 2){
+    res.redir('/logout');
+   } 
+    next();
+  }); 
+ }
 app.use('/', routes);
 
 

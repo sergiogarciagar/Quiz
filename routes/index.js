@@ -31,6 +31,7 @@ router.post('/user', userController.create);  // formulario usuasio
 router.get('/user/:userId(\\d+)/edit', sessionController.loginRequired, userController.ownershipRequired, userController.edit);
 router.put('/user/:userId(\\d+)', sessionController.loginRequired, userController.ownershipRequired, userController.update);
 router.delete('/user/:userId(\\d+)',sessionController.loginRequired, userController.ownershipRequired, userController.destroy);
+router.get('/user/:userId(\\d+)/quizes', quizController.index); // ver las preguntas de cada usuario
 
 //Definicion de rutas de /quizes
 router.get('/quizes', quizController.index);
