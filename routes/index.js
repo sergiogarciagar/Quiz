@@ -6,6 +6,7 @@ var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var userController = require('../controllers/user_controller');
+var estadisticaController = require('../controllers/estadistica_controller');
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz', errors: []});
@@ -37,6 +38,8 @@ router.get('/user/:userId(\\d+)/quizes', quizController.index); // ver las pregu
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
+// Ruta para la estadistica /GET /quizes/statistics
+router.get('/quizes/statistics', estadisticaController.estadistica);
 //Rutas de /quizes con autorización
 router.get('/quizes/new', sessionController.loginRequired, quizController.new);
 router.post('/quizes/create',sessionController.loginRequired, multer({dest: './public/media/'}), quizController.create);
