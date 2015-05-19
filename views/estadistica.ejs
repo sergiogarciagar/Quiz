@@ -18,8 +18,10 @@
 <p>- Número de comentarios medio por pregunta: <%= media%></p>
 
 
-<% var i = 3; %>
-<p>- Número de preguntas sin comentarios: <%= quizId[i].comments %></p>
+<% var ncon= 0;  for (i= 0; i< quiz.length; i++) { %>
+  <% ncon ++; %>  
+  <% } %> 
+<p>- Número de preguntas sin comentarios: <%= ncom %></p>
 
- <% var cont = cp-quizes.length %>
-<p>- Número de preguntas con comentarios: <%= cont%></p>
+ <% var con = cp-ncon; %>
+<p>- Número de preguntas con comentarios: <%= con%></p>

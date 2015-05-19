@@ -10,18 +10,18 @@ exports.estadistica = function(req, res, next){
 	var numero = {};
 	var comment = req.comment;
 	var quizes = req.quizes;
-	var quizId = req.quizId 
+	var quiz = req.quiz;
 	models.Quiz.findAll(options).then(
     	function(quizes) {
     		models.Comment.findAll(valores).then(
            function(comment){
-           	models.Comment.findAll(numero).then(
-           		function(quizId){
-    		res.render('estadistica.ejs', {quizes: quizes, comment: comment, quizId: quizId, errors: []});
+          models.Quiz.find(numero)
+         .then(function(quiz){      
+    		res.render('estadistica.ejs', {quizes: quizes, comment: comment, quiz: quiz, errors: []});
     		}
-    	   );
-          }
     	);
+    }
+      );
       }
     );
 };
