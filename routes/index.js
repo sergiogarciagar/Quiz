@@ -7,6 +7,7 @@ var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var userController = require('../controllers/user_controller');
 var estadisticaController = require('../controllers/estadistica_controller');
+var favouritesController = require('../controllers/favourites_controller');
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Quiz', errors: []});
@@ -20,6 +21,7 @@ router.get('/author', function(req, res) {
 router.param('quizId', quizController.load); //autoload :quizId
 router.param('commentId', commentController.load); // autoload :commentId
 router.param('userId', userController.load);  //autoload :userId
+router.param('favouritesId', favouritesController.load); //autoload favourites
 
 // Definición de rutas de sesion
 router.get('/login', sessionController.new); //formulario login
@@ -51,5 +53,12 @@ router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',
 	                                          sessionController.loginRequired, userController.ownershipRequired, commentController.publish);
+
+
+// Definicion de rutas de favoritod
+router.get('/user/:userId/favourites', favouritesController.index);
+router.put('/user/:userId/favourites/:quizId', sessionController.loginRequired, favouritesController.add);
+router.delete('/user/:userId/favourites/:quizId', sessionController.loginRequired, favouritesController.destroy);
+
 
 module.exports = router;

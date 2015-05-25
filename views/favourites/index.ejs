@@ -1,0 +1,35 @@
+<h3> Preguntas favoritas del usuario</h3>
+
+<table>
+<% var i; for(index in favourites) { %>
+	<tr>
+	<td><a href="/quizes/<%= favourites[index].id %>"><%= favourites[index].pregunta %></a></td>
+	<%if(session.user){if( session.user.isAdmin || session.user.id === favourites[index].UserId) {%>
+	<td><a href="/quizes/<%= favourites[index].id %>/edit"><button>editar</button></a></td>
+	<td>
+	<form method="post" action="/quizes/<%= favourites[index].id %>?_method=delete">
+	<button type="submit" onClick="return confirm('Borrar: <%= favourites[index].pregunta %>');">
+	borrar
+	</button>
+	</form></td>
+	<% } %>
+	<% }%>
+     
+     <%if(session.user){ %>
+     <% if(fav === true){ %>
+       <td><form method="post" action="/user/<%= session.user.id%>/favourites/<%=favourites[index].id%>?_method=delete">
+       <button type="submit">
+       <img src="../../images/sif.png">
+       </button>
+       </form>
+     <% } else { %>
+     <td><form method="post" action="/user/<%= session.user.id%>/favourites/<%=favourites[index].id%>?_method=put">
+       <button type="submit">
+       <img src="../../images/nof.png">
+       </button>
+       </form>
+     <% } } %>
+	</td>
+	</tr>
+	<% } %>
+ </table><p>

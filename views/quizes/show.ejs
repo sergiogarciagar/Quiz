@@ -13,6 +13,15 @@
  <input type="submit" value="Enviar">
  </form>
 
+ <%if(session.user){%>
+       <td><form method="post" action="/user/<%= session.user.id%>/favourites/<%=quiz.id%>?_method=put">
+       <button type="submit">
+       <img src="../../images/show/nof.png">
+       </button>
+       </form>
+     <% } %>
+
+
  <p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo comentario</button></a></p>
 
  <p><strong>Comentarios:</strong></p>

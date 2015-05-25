@@ -72,7 +72,7 @@ app.use(function(req, res, next) {
     t1 = t1.getSeconds() + t1.getMinutes()*60 + t1.getHours()*3600;
     break;
   }
-  if(req.session.user && (t1-t2) > 120){
+  if(req.session.user && (t1-t2) > 12000){
     req.session.destroy();
   }
    t2 = new Date();
